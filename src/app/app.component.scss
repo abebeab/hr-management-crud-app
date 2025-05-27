@@ -1,0 +1,72 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; // Ensure app takes full viewport height
+}
+
+.app-sidenav-container {
+  flex-grow: 1; // Sidenav container takes remaining space
+  background-color: #f4f6f8; // Match global background
+}
+
+.app-sidenav {
+  width: 250px; // Adjust sidenav width as needed
+  border-right: 1px solid rgba(0,0,0,0.08);
+  background-color: #fff; // Sidenav background
+
+  .sidenav-toolbar {
+    // background-color: transparent; // Or a slightly different shade than main toolbar
+    padding: 0 16px;
+    height: 64px; // Match main toolbar height
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    // border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .mat-mdc-list-item { // Styling for list items in sidenav
+    height: 48px !important;
+    .mat-icon {
+      margin-right: 16px;
+      color: rgba(0,0,0,0.6);
+    }
+    span {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(0,0,0,0.8);
+    }
+  }
+}
+
+.app-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000; // Keep toolbar above content when scrolling
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Subtle shadow for depth
+}
+
+.menu-toggle-button {
+  // Styles for the hamburger menu button if you want to customize it
+  // By default, it might be hidden on larger screens if sidenav is always open
+}
+
+.page-content-wrapper {
+  flex-grow: 1; // Main content area takes available space
+  overflow-y: auto; // Allow scrolling within the content area only
+}
+
+// Responsive adjustments
+@media (max-width: 959px) { // Corresponds to Breakpoints.Small and XSmall
+  .app-sidenav {
+    // Sidenav might be 'over' mode on mobile, so styling could differ if needed
+  }
+  // .menu-toggle-button { // Ensure it's visible on mobile
+  //   display: inline-flex !important;
+  // }
+}

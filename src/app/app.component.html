@@ -1,11 +1,57 @@
-<mat-toolbar color="primary">
-  <span>HR Management System</span>
-  <span class="spacer"></span>
-  <a mat-button routerLink="/candidates">Candidates</a>
-  <a mat-button routerLink="/companies">Companies</a>
-  <a mat-button routerLink="/departments">Departments</a>
-  <a mat-button routerLink="/salaries">Salaries</a>
-  <a mat-button routerLink="/employees">Employees</a>
-</mat-toolbar>
+<mat-sidenav-container class="app-sidenav-container">
+  <mat-sidenav #sidenav
+               class="app-sidenav"
+               mode="side"
+               [(opened)]="isSidenavOpened"
+               [fixedInViewport]="true"
+               [fixedTopGap]="0">
+    <mat-toolbar class="sidenav-toolbar">
+      <span>HR Menu</span>
+    </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/candidates" routerLinkActive="nav-active-list-item" (click)="isMobileView ? sidenav.close() : null">
+        <mat-icon matListItemIcon>people_outline</mat-icon>
+        <span matListItemTitle>Candidates</span>
+      </a>
+      <a mat-list-item routerLink="/companies" routerLinkActive="nav-active-list-item" (click)="isMobileView ? sidenav.close() : null">
+        <mat-icon matListItemIcon>business</mat-icon>
+        <span matListItemTitle>Companies</span>
+      </a>
+      <a mat-list-item routerLink="/departments" routerLinkActive="nav-active-list-item" (click)="isMobileView ? sidenav.close() : null">
+        <mat-icon matListItemIcon>group_work</mat-icon>
+        <span matListItemTitle>Departments</span>
+      </a>
+      <a mat-list-item routerLink="/employees" routerLinkActive="nav-active-list-item" (click)="isMobileView ? sidenav.close() : null">
+        <mat-icon matListItemIcon>badge</mat-icon> <!-- Changed icon for Employees -->
+        <span matListItemTitle>Employees</span>
+      </a>
+      <a mat-list-item routerLink="/salaries" routerLinkActive="nav-active-list-item" (click)="isMobileView ? sidenav.close() : null">
+        <mat-icon matListItemIcon>payments</mat-icon> <!-- Changed icon for Salaries -->
+        <span matListItemTitle>Salaries</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-<router-outlet></router-outlet>
+  <mat-sidenav-content class="app-sidenav-content">
+    <mat-toolbar color="primary" class="app-toolbar">
+      <button mat-icon-button (click)="sidenav.toggle()" class="menu-toggle-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>HR Management System</span>
+      <span class="spacer"></span>
+      <!-- Future user profile / logout button can go here -->
+      <!--
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item>Logout</button>
+      </mat-menu>
+      -->
+    </mat-toolbar>
+    <main class="page-content-wrapper">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

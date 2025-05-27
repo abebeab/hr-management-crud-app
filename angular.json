@@ -28,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+            
               "src/styles.scss"
             ],
             "scripts": []
@@ -81,8 +81,7 @@
           "options": {
             "browserTarget": "hr-management-crud-app:build"
           }
-        },
-        "test": {
+        },        "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
@@ -94,8 +93,7 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss" // <--- NOW CORRECT
             ],
             "scripts": []
           }
