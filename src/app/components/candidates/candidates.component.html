@@ -1,0 +1,66 @@
+<mat-toolbar color="primary">
+  Candidates Management
+</mat-toolbar>
+
+<mat-card>
+  <form (ngSubmit)="onSubmit()" #candidateForm="ngForm">
+    <div class="form-fields">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="selectedCandidate.name" name="name" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Applied Position</mat-label>
+        <input matInput [(ngModel)]="selectedCandidate.appliedPosition" name="appliedPosition" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Company ID</mat-label>
+        <input matInput type="number" [(ngModel)]="selectedCandidate.companyId" name="companyId" required />
+      </mat-form-field>
+    </div>
+
+    <div class="form-buttons">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!candidateForm.form.valid">
+        {{ selectedCandidate.id ? 'Update' : 'Add' }} Candidate
+      </button>
+      <button mat-button type="button" (click)="clearForm()">Clear</button>
+    </div>
+  </form>
+</mat-card>
+
+<mat-card>
+  <table mat-table [dataSource]="candidates" class="mat-elevation-z8 full-width-table">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let candidate">{{ candidate.name }}</td>
+    </ng-container>
+
+    <!-- Applied Position Column -->
+    <ng-container matColumnDef="appliedPosition">
+      <th mat-header-cell *matHeaderCellDef>Applied Position</th>
+      <td mat-cell *matCellDef="let candidate">{{ candidate.appliedPosition }}</td>
+    </ng-container>
+
+    <!-- Company ID Column -->
+    <ng-container matColumnDef="companyId">
+      <th mat-header-cell *matHeaderCellDef>Company ID</th>
+      <td mat-cell *matCellDef="let candidate">{{ candidate.companyId }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let candidate">
+        <button mat-button (click)="editCandidate(candidate)">Edit</button>
+        <button mat-button color="warn" (click)="deleteCandidate(candidate.id)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>
