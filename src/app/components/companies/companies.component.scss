@@ -1,0 +1,42 @@
+.toolbar {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  padding-left: 24px;
+}
+
+.form-card {
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.full-width {
+  flex: 1 1 300px;
+}
+
+.form-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+}
+
+.table-card {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.full-width-table {
+  width: 100%;
+}
+
+mat-icon {
+  vertical-align: middle;
+}

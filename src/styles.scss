@@ -1,4 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.full-width {
+  width: 100%;
+}
+
+.mt-4 {
+  margin-top: 30px;
+}
