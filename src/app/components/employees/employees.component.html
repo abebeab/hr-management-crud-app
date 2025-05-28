@@ -1,1 +1,118 @@
-<p>employees works!</p>
+<mat-card class="mb-4">
+  <mat-card-title>
+    {{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngIf="isLoadingRelatedData" class="loading-shade">
+      <mat-spinner diameter="40"></mat-spinner> <span class="ml-2">Loading form data...</span>
+    </div>
+    <form (ngSubmit)="onSubmit()" #employeeForm="ngForm" class="employee-form" *ngIf="!isLoadingRelatedData">
+      <div class="form-fields-grid-multirow">
+        <mat-form-field appearance="outline">
+          <mat-label>Employee Name</mat-label>
+          <input matInput [(ngModel)]="selectedEmployee.name" name="name" required minlength="3" #nameField="ngModel">
+          <mat-error *ngIf="nameField.errors?.required && (nameField.dirty || nameField.touched)">Name is required.</mat-error>
+          <mat-error *ngIf="nameField.errors?.minlength && (nameField.dirty || nameField.touched)">Name must be at least 3 characters.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select [(ngModel)]="selectedEmployee.departmentId" name="departmentId" required #deptField="ngModel">
+            <mat-option *ngIf="!allDepartments.length" disabled>Loading departments...</mat-option>
+            <mat-option *ngFor="let dept of allDepartments" [value]="dept.id">
+              {{ dept.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="deptField.errors?.required && (deptField.dirty || deptField.touched)">Department is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Company</mat-label>
+          <mat-select [(ngModel)]="selectedEmployee.companyId" name="companyId" required #compField="ngModel">
+             <mat-option *ngIf="!allCompanies.length" disabled>Loading companies...</mat-option>
+            <mat-option *ngFor="let comp of allCompanies" [value]="comp.id">
+              {{ comp.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="compField.errors?.required && (compField.dirty || compField.touched)">Company is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Salary</mat-label>
+          <mat-select [(ngModel)]="selectedEmployee.salaryId" name="salaryId" required #salaryField="ngModel">
+            <mat-option *ngIf="!allSalaries.length" disabled>Loading salaries...</mat-option>
+            <mat-option *ngFor="let sal of allSalaries" [value]="sal.id">
+              {{ sal.amount | number }} {{ sal.currency }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="salaryField.errors?.required && (salaryField.dirty || salaryField.touched)">Salary is required.</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-card-actions class="form-buttons">
+        <button mat-stroked-button type="button" (click)="clearForm()" [disabled]="isLoading">
+          Clear
+        </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="employeeForm.invalid || isLoading">
+          <mat-icon *ngIf="isLoading" class="button-spinner"><mat-spinner diameter="20"></mat-spinner></mat-icon>
+          {{ isEditMode ? 'Update' : 'Save' }} Employee
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>
+    Employees List
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngIf="isLoading && !employees.length" class="loading-shade">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <div *ngIf="!isLoading && !employees.length && !isLoadingRelatedData" class="empty-state">
+      <mat-icon class="empty-state-icon">people</mat-icon>
+      <p>No employees found. Add one using the form above.</p>
+    </div>
+
+    <div class="table-responsive" *ngIf="employees.length > 0">
+      <table mat-table [dataSource]="employees" class="mat-table full-width">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let employee"> {{employee.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef> Department </th>
+          <td mat-cell *matCellDef="let employee"> {{getDepartmentName(employee.departmentId)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+          <th mat-header-cell *matHeaderCellDef> Company </th>
+          <td mat-cell *matCellDef="let employee"> {{getCompanyName(employee.companyId)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="salary">
+          <th mat-header-cell *matHeaderCellDef> Salary </th>
+          <td mat-cell *matCellDef="let employee"> {{getSalaryDetails(employee.salaryId)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-header"> Actions </th>
+          <td mat-cell *matCellDef="let employee" class="actions-cell">
+            <button mat-icon-button color="accent" (click)="editEmployee(employee)" aria-label="Edit Employee" [disabled]="isLoading">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteEmployee(employee.id)" aria-label="Delete Employee" [disabled]="isLoading">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

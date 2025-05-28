@@ -1,29 +1,68 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Employee } from '../models/employee.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private apiUrl = 'api/Employees';
+  private employeesUrl = 'api/employees';
 
-  constructor(private http: HttpClient) {}
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  constructor(private http: HttpClient) { }
 
   getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl);
+    return this.http.get<Employee[]>(this.employeesUrl)
+      .pipe(
+        tap(_ => console.log('fetched employees')),
+        catchError(this.handleError<Employee[]>('getEmployees', []))
+      );
   }
 
-  addEmployee(Employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.apiUrl, Employee);
+  getEmployee(id: number): Observable<Employee> {
+    const url = `${this.employeesUrl}/${id}`;
+    return this.http.get<Employee>(url).pipe(
+      tap(_ => console.log(`fetched employee id=${id}`)),
+      catchError(this.handleError<Employee>(`getEmployee id=${id}`))
+    );
   }
 
-  updateEmployee(Employee: Employee): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${Employee.id}`, Employee);
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(this.employeesUrl, employee, this.httpOptions).pipe(
+      tap((newEmployee: Employee) => console.log(`added employee w/ id=${newEmployee.id}`)),
+      catchError(this.handleError<Employee>('addEmployee'))
+    );
   }
 
-  deleteEmployee(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  updateEmployee(employee: Employee): Observable<any> {
+    return this.http.put(this.employeesUrl, employee, this.httpOptions).pipe(
+      tap(_ => console.log(`updated employee id=${employee.id}`)),
+      catchError(this.handleError<any>('updateEmployee'))
+    );
+  }
+
+  deleteEmployee(id: number): Observable<Employee> {
+    const url = `${this.employeesUrl}/${id}`;
+    return this.http.delete<Employee>(url, this.httpOptions).pipe(
+      tap(_ => console.log(`deleted employee id=${id}`)),
+      catchError(this.handleError<Employee>('deleteEmployee'))
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`--- ${operation} FAILED ---`);
+      console.error('Status:', error.status);
+      console.error('Status Text:', error.statusText);
+      console.error('URL:', error.url);
+      console.error('Message:', error.message);
+      console.error('Full Error Object:', JSON.stringify(error, null, 2));
+      return of(result as T);
+    };
   }
 }

@@ -1,6 +1,6 @@
 export interface Company {
   id: number;
   name: string;
-  location: string;
+  industry?: string; // Optional
+  location?: string; // Optional
 }
-
