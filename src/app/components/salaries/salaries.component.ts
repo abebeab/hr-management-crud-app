@@ -15,7 +15,8 @@ export class SalariesComponent implements OnInit {
   selectedSalary: Salary = this.resetSalary();
   isLoading = false;
   isEditMode = false;
-  currencies: string[] = ['USD', 'EUR', 'GBP', 'INR', 'CAD', 'AUD']; // Example currencies
+  // Update currencies array to include BIRR, perhaps as the first option
+  currencies: string[] = ['BIRR', 'USD', 'EUR', 'GBP', 'INR', 'CAD', 'AUD']; // Example currencies
 
   displayedColumns: string[] = ['amount', 'currency', 'actions'];
 
@@ -29,7 +30,7 @@ export class SalariesComponent implements OnInit {
   }
 
   resetSalary(): Salary {
-    return { id: 0, amount: 0, currency: 'USD' }; // Default currency
+    return { id: 0, amount: 0, currency: 'BIRR' }; // <--- CHANGED DEFAULT CURRENCY HERE
   }
 
   loadSalaries(): void {
@@ -92,17 +93,17 @@ export class SalariesComponent implements OnInit {
   }
 
   clearForm(): void {
-    this.selectedSalary = this.resetSalary();
+    // this.selectedSalary = this.resetSalary(); // resetSalary() is already called by resetForm
     this.isEditMode = false;
     if (this.salaryForm) {
-      this.salaryForm.resetForm(this.resetSalary()); // Reset with default values
+      this.salaryForm.resetForm(this.resetSalary()); // Pass the new default state to resetForm
     }
   }
 
   private operationSuccess(message: string): void {
     this.snackBar.open(message, 'Close', { duration: 3000 });
     this.loadSalaries();
-    this.clearForm();
+    this.clearForm(); // This will use the new default
     this.isLoading = false;
   }
 

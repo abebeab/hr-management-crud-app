@@ -1,42 +1,62 @@
-.toolbar {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: white;
-  padding-left: 24px;
+// Inherit global styles for cards, forms etc. from styles.scss
+// Add component-specific styles here if needed.
+
+.company-form {
+  // If you need specific layout adjustments for this form
 }
 
-.form-card {
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 8px;
+.form-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Responsive columns for name & industry
+  gap: 20px;
+  margin-bottom: 20px;
+
+  .full-span-column {
+    // This will make the location field span full width if grid has multiple columns
+    @media (min-width: 600px) { // Example breakpoint for 2 columns
+       grid-column: 1 / -1;
+    }
+  }
 }
 
-.form-fields {
+// .form-buttons is handled by .mat-card-actions in global styles
+
+.loading-shade {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.7); // Slight overlay
 }
 
-.full-width {
-  flex: 1 1 300px;
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #757575; // Consider using a theme variable for this color
+
+  .empty-state-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    // color: mat-color($primary, 300); // Example using theme color from styles.scss (would need @import)
+  }
 }
 
-.form-buttons {
-  margin-top: 20px;
-  display: flex;
-  gap: 16px;
+.table-responsive {
+  overflow-x: auto; // For smaller screens if table is wide
 }
 
-.table-card {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 8px;
+.actions-header {
+  text-align: right !important; // Align actions header to the right
+  padding-right: 16px !important; // Ensure padding for alignment
 }
 
-.full-width-table {
-  width: 100%;
+.actions-cell {
+  text-align: right !important; // Align action buttons to the right
+  white-space: nowrap; // Prevent buttons from wrapping
 }
 
-mat-icon {
-  vertical-align: middle;
+.button-spinner .mat-spinner circle { // Style spinner within a button
+  stroke: currentColor !important;
 }

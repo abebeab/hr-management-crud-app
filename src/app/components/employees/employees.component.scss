@@ -1,45 +1,63 @@
-@import '~@angular/material/theming';
-
-// Inherit global styles
+// Inherit global styles from styles.scss
 
 .employee-form {
   // Specific form styling if needed
 }
 
-.form-fields-grid-multirow { // For a 2x2 grid or similar for 4 fields
+.form-fields-grid-multirow {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Responsive columns
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 20px; // Spacing between form fields
+  margin-bottom: 20px; // Space above action buttons
 
-  // On larger screens, you might want a fixed 2-column layout
-  // @media (min-width: 768px) {
-  //   grid-template-columns: 1fr 1fr;
-  // }
+  .form-field-item { // Class for each mat-form-field if needed for alignment
+    // width: 100%; // Already default for mat-form-field due to global style
+  }
 }
 
 .loading-shade {
   display: flex;
+  flex-direction: column; // Stack spinner and text
   justify-content: center;
   align-items: center;
   padding: 40px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.8); // Slightly more opaque for better visibility
+  min-height: 150px; // Ensure it has some height
 
-  .ml-2 { // Simple margin left utility for spinner text
+  &.text-center { // If you want to apply text-center directly here
+    text-align: center;
+  }
+
+  .inline-spinner { // To align spinner and text on the same line if needed
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .ml-2 {
     margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
   }
 }
 
 .empty-state {
   text-align: center;
-  padding: 40px;
+  padding: 40px 20px; // Added horizontal padding
   color: #757575;
+  min-height: 150px; // Ensure it has some height
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .empty-state-icon {
-    font-size: 64px;
-    width: 64px;
-    height: 64px;
+    font-size: 56px; // Slightly smaller
+    width: 56px;
+    height: 56px;
     margin-bottom: 16px;
+  }
+  p {
+    margin-top: 0;
+    font-size: 1rem;
   }
 }
 
@@ -49,12 +67,13 @@
 
 .actions-header {
   text-align: right !important;
-  padding-right: 16px !important;
+  padding-right: 16px !important; // More consistent with cell padding
 }
 
 .actions-cell {
   text-align: right !important;
   white-space: nowrap;
+  padding-right: 8px !important; // Align with header more
 }
 
 .button-spinner .mat-spinner circle {

@@ -25,15 +25,16 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 15, name: 'Finance' }
     ];
      const salaries: Salary[] = [ // <--- ADD SAMPLE SALARY DATA
+      { id: 21, amount: 50000, currency: 'BRR' },
       { id: 21, amount: 50000, currency: 'USD' },
       { id: 22, amount: 65000, currency: 'USD' },
       { id: 23, amount: 80000, currency: 'EUR' },
       { id: 24, amount: 4500000, currency: 'INR' }
     ];
        const employees: Employee[] = [ // <--- ADD SAMPLE EMPLOYEE DATA
-      { id: 31, name: 'John Doe', departmentId: 12, salaryId: 22, companyId: 1 },
-      { id: 32, name: 'Jane Smith', departmentId: 11, salaryId: 21, companyId: 1 },
-      { id: 33, name: 'Peter Jones', departmentId: 13, salaryId: 22, companyId: 2 },
+      { id: 31, name: 'Abebe Tafere', departmentId: 12, salaryId: 22, companyId: 1 },
+      { id: 32, name: 'Amanuel yosef', departmentId: 11, salaryId: 21, companyId: 1 },
+      { id: 33, name: 'Aster Kebede', departmentId: 13, salaryId: 22, companyId: 2 },
     ];
      
 
