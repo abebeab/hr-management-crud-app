@@ -1,1 +1,164 @@
-// ... (rest of your styles)
+// src/styles.scss
+
+// Import Angular Material Theming functions
+@import '~@angular/material/theming';
+
+// Include the common styles for Angular Material.
+@include mat-core();
+
+// Define the palettes for your theme
+$hr-app-primary: mat-palette($mat-indigo, 700, 500, 800);
+$hr-app-accent: mat-palette($mat-pink, A400, A200, A700);
+$hr-app-warn: mat-palette($mat-red);
+
+// Define a custom typography config
+$hr-app-typography: mat-typography-config(
+  $font-family: 'Roboto, "Helvetica Neue", sans-serif',
+  $headline: mat-typography-level(24px, 32px, 500),
+  $title: mat-typography-level(20px, 32px, 500),
+  $subheading-1: mat-typography-level(16px, 28px, 400),
+  $body-1: mat-typography-level(16px, 24px, 400),
+  $button: mat-typography-level(14px, 14px, 500, $letter-spacing: 0.05em)
+);
+
+// Create the theme object.
+// For Angular Material 8, pass palettes directly. Typography is applied separately.
+$hr-app-theme: mat-light-theme( // <--- CORRECTED: Palettes passed directly
+  $primary: $hr-app-primary,
+  $accent: $hr-app-accent,
+  $warn: $hr-app-warn
+);
+
+// Apply the color theme.
+@include angular-material-theme($hr-app-theme);
+
+// Apply the typography separately.
+@include angular-material-typography($hr-app-typography); // <--- ADD THIS LINE TO APPLY TYPOGRAPHY
+
+/* Global application styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  // font-family is now handled by mat-typography-config when components use Material typography
+  background-color: #f0f2f5;
+  color: #3f4254;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+// Main page content area styling
+.page-content-wrapper {
+  padding: 24px 30px;
+  box-sizing: border-box;
+}
+
+// Global Card Styling Enhancements
+.mat-card { // Use .mat-card for Angular Material 8, not .mat-mdc-card
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  transition: box-shadow 0.3s ease-in-out;
+  margin-bottom: 24px;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
+  }
+}
+
+.mat-card-header { // Use .mat-card-header
+  padding: 20px 24px !important;
+}
+
+.mat-card-title { // Use .mat-card-title
+  color: mat-color($hr-app-primary, 700);
+  // Font size/weight for card titles should come from the $title level of your typography config
+  // if the component applies it, or you can apply a class with mat-typography-level-to-styles
+}
+
+.mat-card-subtitle { // Use .mat-card-subtitle
+  color: rgba(0,0,0,0.54);
+  font-size: 0.9rem;
+}
+
+.mat-card-content { // Use .mat-card-content
+  padding: 0 24px 24px 24px !important;
+}
+
+.mat-card-actions { // Use .mat-card-actions
+  padding: 12px 24px !important;
+  justify-content: flex-end;
+  display: flex;
+  gap: 8px;
+}
+
+// Utility Classes
+.full-width { width: 100%; }
+.text-center { text-align: center; }
+.mt-1 { margin-top: 8px !important; }
+.mt-2 { margin-top: 16px !important; }
+.mt-3 { margin-top: 24px !important; }
+.mt-4 { margin-top: 32px !important; }
+
+.mb-1 { margin-bottom: 8px !important; }
+.mb-2 { margin-bottom: 16px !important; }
+.mb-3 { margin-bottom: 24px !important; }
+.mb-4 { margin-bottom: 32px !important; }
+
+.p-1 { padding: 8px !important; }
+.p-2 { padding: 16px !important; }
+.p-3 { padding: 24px !important; }
+
+.spacer { flex: 1 1 auto; }
+
+// Table styling enhancements
+.mat-table { // Use .mat-table
+  background-color: transparent;
+
+  .mat-header-cell { // Use .mat-header-cell
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: rgba(0,0,0,0.8);
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(0,0,0,0.08);
+  }
+  .mat-cell { // Use .mat-cell
+    font-size: 0.875rem;
+    border-bottom-color: rgba(0,0,0,0.05);
+  }
+}
+
+// Style for routerLinkActive in Sidenav
+.nav-active-list-item {
+  background-color: mat-color($hr-app-primary, 50) !important;
+  color: mat-color($hr-app-primary, default) !important;
+
+  .mat-icon {
+    color: mat-color($hr-app-primary, default) !important;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    background-color: mat-color($hr-app-accent);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+}
+
+// Button enhancements
+button.mat-raised-button.mat-primary, // Use .mat-raised-button
+button.mat-fab.mat-primary,           // Use .mat-fab
+button.mat-mini-fab.mat-primary {     // Use .mat-mini-fab
+  transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  &:hover {
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+  }
+}

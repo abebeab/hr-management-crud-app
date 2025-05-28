@@ -1,39 +1,53 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: 100vh; // Ensure app takes full viewport height
+  height: 100vh;
+  overflow: hidden; // Prevent body scrollbars if content is managed within
 }
 
 .app-sidenav-container {
-  flex-grow: 1; // Sidenav container takes remaining space
-  background-color: #f4f6f8; // Match global background
+  flex-grow: 1;
+  // background-color: #f4f6f8; // Already in styles.scss
 }
 
 .app-sidenav {
-  width: 250px; // Adjust sidenav width as needed
-  border-right: 1px solid rgba(0,0,0,0.08);
-  background-color: #fff; // Sidenav background
+  width: 260px; // Slightly wider for more breathing room
+  border-right: none !important; // Remove default border if adding a box-shadow
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05); // Softer shadow for sidenav
+  background-color: #ffffff; // Clean white background for sidenav
 
   .sidenav-toolbar {
-    // background-color: transparent; // Or a slightly different shade than main toolbar
-    padding: 0 16px;
-    height: 64px; // Match main toolbar height
     display: flex;
     align-items: center;
-    font-weight: 500;
-    // border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 0 24px; // More padding
+    height: 64px; // Standard toolbar height
+    // background-color: #fafbfd; // Very light off-white, or keep white
+    border-bottom: 1px solid #e0e0e0; // Subtle separator
+    box-sizing: border-box;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #333; // Darker text for better contrast on light bg
+    }
   }
 
-  .mat-mdc-list-item { // Styling for list items in sidenav
-    height: 48px !important;
+  .mat-list-item { // <--- CHANGED from .mat-mdc-list-item
+    height: 52px !important;
+    padding: 0 24px !important;
+    color: #5f6368;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+
     .mat-icon {
-      margin-right: 16px;
-      color: rgba(0,0,0,0.6);
+      margin-right: 20px;
+      color: #5f6368;
+      transition: color 0.2s ease-in-out;
     }
-    span {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: rgba(0,0,0,0.8);
+
+    &:hover:not(.nav-active-list-item) {
+      background-color: rgba(0, 0, 0, 0.04);
     }
   }
 }
@@ -47,26 +61,24 @@
 .app-toolbar {
   position: sticky;
   top: 0;
-  z-index: 1000; // Keep toolbar above content when scrolling
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Subtle shadow for depth
-}
+  z-index: 1000;
+  // box-shadow: 0 2px 5px rgba(0,0,0,0.1); // Default shadow from Material is often good
+  // background-color: mat-color($hr-app-primary); // <--- REMOVE THIS LINE
 
-.menu-toggle-button {
-  // Styles for the hamburger menu button if you want to customize it
-  // By default, it might be hidden on larger screens if sidenav is always open
+  span:not(.spacer) { // For the "HR Management System" title
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
 }
-
 .page-content-wrapper {
-  flex-grow: 1; // Main content area takes available space
-  overflow-y: auto; // Allow scrolling within the content area only
+  flex-grow: 1;
+  overflow-y: auto; // Scroll within this area
+  // padding: 24px; // This is already in styles.scss for .page-content-wrapper
 }
 
 // Responsive adjustments
-@media (max-width: 959px) { // Corresponds to Breakpoints.Small and XSmall
+@media (max-width: 959px) {
   .app-sidenav {
-    // Sidenav might be 'over' mode on mobile, so styling could differ if needed
+    box-shadow: 0 0 15px rgba(0,0,0,0.15); // Stronger shadow when 'over' on mobile
   }
-  // .menu-toggle-button { // Ensure it's visible on mobile
-  //   display: inline-flex !important;
-  // }
 }
